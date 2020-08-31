@@ -32,18 +32,34 @@ h1 {
 }
 
 #game-box {
-    width: 90vh;
-    height: 50vh;
+    width: 95vh;
+    height: 55vh;
     border: solid 2px #000000;
 }
 
-@media (max-width: 700px) {
+#how-to-play {
+    color: #FFB612;
+    font-family: 'Notable', sans-serif;
+    background-color: #ca2430;
+    border: 2px solid #FFB612;
+    margin: 20px;
+    padding: 10px 30px;
+    font-size: 15px;
+}
+
+#how-to-play:hover {
+    transform: scale(1.1);
+    transition: .4s;
+    cursor: pointer;
+}
+
+@media (max-width: 500px) {
     h1 {
         font-size: 35px;
         text-align: center;
     }
     #game-box {
         widows: 70vh;
-        height: 40vh;
+        height: 45vh;
     }
 }
