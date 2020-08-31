@@ -1,0 +1,49 @@
+<link href="https://fonts.googleapis.com/css2?family=Notable&display=swap" rel="stylesheet">
+
+/* colors
+    --off-white: #f9f9f9;
+    --black: #000000;
+    --red: #ca2430;
+    --gold: #FFB612; 
+*/
+
+
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    height: 100vh;
+    background-color: #f9f9f9;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+
+h1 {
+    border: 5px solid #FFB612;
+    padding: 15px;
+    font-family: 'Notable', sans-serif;
+    font-size: 3em;
+    color: #FFB612;
+    background-color: #ca2430 ;
+}
+
+#game-box {
+    width: 90vh;
+    height: 50vh;
+    border: solid 2px #000000;
+}
+
+@media (max-width: 700px) {
+    h1 {
+        font-size: 35px;
+        text-align: center;
+    }
+    #game-box {
+        widows: 70vh;
+        height: 40vh;
+    }
+}
