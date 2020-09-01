@@ -37,6 +37,10 @@ h1 {
     border: solid 2px #000000;
 }
 
+.lower-content {
+    display: flex;
+}
+
 #how-to-play {
     color: #FFB612;
     font-family: 'Notable', sans-serif;
@@ -51,6 +55,12 @@ h1 {
     transform: scale(1.1);
     transition: .4s;
     cursor: pointer;
+}
+
+p {
+    border: solid 2px #000000;
+    text-align: center;
+    padding: 12px;
 }
 
 @media (max-width: 500px) {
