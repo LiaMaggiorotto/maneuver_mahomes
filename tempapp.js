@@ -26,6 +26,22 @@ class Player {
         this.grounded = false;
         }
 
+        // animation methods:
+        Animation () {
+        // creating gravity at starting point on horizon:
+            if(this.y + this.height < canvas.height) {
+                this.dy += gravity;
+            } else {
+                this.dy = 0;
+                this.grounded = true;
+                this.y = (canvas.height - this.height);
+            }
+            
+            this.y += this.dy;
+            this.Draw();
+        }
+
+
         Draw () {
             ctx.beginPath();
             ctx.fillStyle = this.color;
@@ -52,13 +68,11 @@ class Player {
     }
 
 
-
-
     const clear = function () {
         requestAnimationFrame(clear);
-            ctx.clearRect(0, 0, canvas.width, canvas.height); 
-            // mahomes.Draw();
-            // mahomes.x++   
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            
+        mahomes.Animation();
     }
 
     startGame();
