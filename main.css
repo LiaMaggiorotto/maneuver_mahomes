@@ -52,14 +52,8 @@ h1 {
 }
 
 canvas {
-    width: 95vh;
-    height: 55vh;
     border: solid 2px #000000;
 }
-
-/* #play-canvas {
-
-} */
 
 .lower-content {
     display: flex;
