@@ -31,11 +31,35 @@ h1 {
     background-color: #ca2430 ;
 }
 
-#game-box {
+#runningMahomes {
+    display: none;
+}
+
+#jumpingMahomes {
+    display: none;
+}
+
+#duckingMahomes {
+    display: none;
+}
+
+#shuttleCock {
+    display: none;
+}
+
+#westernAuto {
+    display: none;
+}
+
+canvas {
     width: 95vh;
     height: 55vh;
     border: solid 2px #000000;
 }
+
+/* #play-canvas {
+
+} */
 
 .lower-content {
     display: flex;
