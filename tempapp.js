@@ -8,8 +8,18 @@ let score;
 let mahomes;
 let gravity;
 let obstacles;
-let gameSpeen; 
-let keys = [];
+let gameSpeed; 
+let keys = {};
+
+
+// Event Listeners
+document.addEventListener('keydown', function(event) {
+    keys[event.code] = true;
+});
+document.addEventListener('keyup', function(event) {
+    keys[event.code] = false;
+});
+
 
 class Player {
     constructor(x, y, w, h, c){
@@ -28,16 +38,22 @@ class Player {
 
         // animation methods:
         Animation () {
-        // creating gravity at starting point on horizon:
+        // test key functions:
+            if (keys['Space']) {
+                console.log("jump");
+            }
+
+        this.y += this.dy;
+
+        // creating gravity:
             if(this.y + this.height < canvas.height) {
                 this.dy += gravity;
             } else {
-                this.dy = 0;
+                this.dy = 0; // no velocity
                 this.grounded = true;
                 this.y = (canvas.height - this.height);
             }
             
-            this.y += this.dy;
             this.Draw();
         }
 
@@ -49,8 +65,6 @@ class Player {
             ctx.stroke();
         }
     }
-
-
 
     
     const startGame = function () {
@@ -81,10 +95,12 @@ class Player {
 
 
 
-// event listener for How to Play button
+// event listeners:
+
+//How to Play button
 const $buttonEl = $('#how-to-play');
 
 $buttonEl.click(function () {
     console.log("clickity"); // tests function
-    alert("Press any button to start the game. Use the up arrow to jump and the down arrow to help Mahomes dodge under these KC landmarks. The longer you run, the higher your score!");
+    alert("Press any button to start the game. Use the spacebar to jump and the down arrow to help Mahomes dodge under these KC landmarks. The longer you run, the higher your score!");
 });

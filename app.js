@@ -27,7 +27,6 @@ let player;
 let gravity;
 let obstacles;
 let gameSpeen; 
-let keys = [];
 
 
 //create player class
@@ -85,7 +84,7 @@ class Player {
                 // begin path ensures last drawing ends before new begins.
                 ctx.beginPath();
                 ctx.fillStyle = this.c;
-                ctx.fillRect(this.x, this.y, this.w, this.h);
+                ctx.fillRect(this.x, this.y, this.widthe, this.height);
                 ctx.stroke();
                 console.log("drawing")
             }
@@ -100,15 +99,38 @@ class Player {
         // add horizon to canvas id - can do this in CSS by adding background-imge to canvas, setting background repeat to repeat on the x-axis, setting size to cover, and setting animation. Look at keyframes para.
         
         // set keys as event listeners : 
+
+        // help:
+        //https://developer.mozilla.org/en-US/docs/Games/Techniques/Control_mechanisms/Desktop_with_mouse_and_keyboard
+
+        // event listeners:
+        document.addEventListener("keydown", keyDownHandler, false);
+        document.addEventListener("keyup", keyUpHandler, false);
+
+        // holding cell for whether the keys are pressed or not
+        let keyUp = false; // case 38
+        let keyDown = false; // case 40 
+        let keys ={up: 38, down: 40};
+
+        // whenever any key is pressed down, we want to execute:
+        const keyDownHandler = function(event) {
+            if(event.keyCode == keys.up) {
+                keyUp = true;
+            }
+            else if (event.keyCode == keys.down) {
+                keyDown = true;
+            }   
+        }
         
-        // window.addEventListener("keydown", mahomesDuck, false);
-        // window.addEventListener("keyup", mahomesJump, false);
-        
-        // key input logic
-        // let keyUp = false; // case 38
-        // let keyDown = false; // case 40
-        
-        
+        // whenever any key is released, we want to execute (so we know when it is no longer pressed):
+        const keyUpHandler = function(event) {
+            if(event.keyCode == keys.up) {
+                keyUp = false;
+            }
+            else if (event.keyCode == keys.down) {
+                keyDown = false;
+            }   
+        }
         
         
         
