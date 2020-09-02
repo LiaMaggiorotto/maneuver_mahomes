@@ -32,10 +32,10 @@ const ctx = canvas.getContext('2d');
         //     }
         
         // method to help find the right side - x-axis location of player
-        get right () {
-            return this.x + this.width;
-        }
+        // get right () {
+        //     return this.x + this.width;
         // }
+        // // }
         
         
         //create let variables :
@@ -46,11 +46,11 @@ const ctx = canvas.getContext('2d');
         
         // set keys as event listeners : 
 
-        // Add How To Play button pop up
+
+        // How To Play button pop up:
 
     const $buttonEl = $('#how-to-play');
     $buttonEl.click(function () {
-        console.log("clickity");
         alert("Press any button to start the game. Use the up arrow to jump and the down arrow to help Mahomes dodge under these KC landmarks. The longer you run, the higher your score!");
     });
 
