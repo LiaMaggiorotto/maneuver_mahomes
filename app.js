@@ -9,15 +9,17 @@ const canvas = document.getElementById("play-canvas");
 // because the game will be in 2D, this allows us to acces the tools of the 2D tool box (paintbrushes and shapes)
 const ctx = canvas.getContext('2d');
 
-// //create let variables :ß
-// // ex: score, gravity, game speed, ground game speed
+// //create let variables :
+// // ex: score, gravity, game speed, ground game speed; images
+let runningMahomes = getElementById("runningMahomes");
+let jumpingMahomes = getElementById("jumpingMahomes");
+let duckingMahomes = getElementById("duckingMahomes");
+let shuttlecock = getElementById("shuttleCock");
+let westernAuto = getElementById("westernAuto");
+
 
 canvas.width = 800;
 canvas.height = 500;
-
-// let score = O;
-// let 
-
 
 
 
@@ -28,17 +30,17 @@ canvas.height = 500;
 //Player:
 
 ctx.fillStyle = "#ca2430";
-ctx.fillRect(80, 350, 50, 100);
+ctx.fillRect(80, 250, 50, 150);
 
 //Obstacles:
 
 //shuttlecock
 ctx.fillStyle ="#FFB612";
-ctx.fillRect(400, 400, 50, 50);
+ctx.fillRect(400, 350, 50, 50);
 
 //sign
 ctx.fillStyle ="#000000";
-ctx.fillRect(700, 325, 50, 50);
+ctx.fillRect(700, 225, 50, 50);
 
 
 // To  make them animated, you have to be able to "draw" repeatedly. create class with methods:
@@ -54,9 +56,8 @@ ctx.fillRect(700, 325, 50, 50);
 //                 this.height = h;
 //                 this.jumpTimer = 
 //                 this.runningImg =
-//                 this. =
-//                 this.score = 0;
-//                 this.gravity = 
+//                 this.dx =
+//                 this.dy = 
 //             }
             
             // method to help find the right side - x-axis location of player
@@ -82,12 +83,13 @@ const mahomesJump = function () {
         
         // set keys as event listeners : 
 
-        window.addEventListener("keydown", mahomesDuck, false);
-        window.addEventListener("keyup", mahomesJump, false);
+        // window.addEventListener("keydown", mahomesDuck, false);
+        // window.addEventListener("keyup", mahomesJump, false);
 
         // key input logic
-        let keyUp = false; // case 38
-        let keyDown = false; // case 40
+        // let keyUp = false; // case 38
+        // let keyDown = false; // case 40
+
 
 
 
