@@ -186,6 +186,12 @@ const startGame = function () {
     gameSpeed = 3;
     gravity = 1;
     score = 0;
+    
+    //pulling highscore from previous plays even upon refresh!!!! I'm dead and this is amazing. 
+    if (localStorage.getItem('highscore')) {
+        highscore = localStorage.getItem('highscore');
+    }
+
     // create player using above class:
     mahomes = new Player(80, 250, 50, 150, "#ca2430");
 
@@ -228,6 +234,7 @@ for (let i = 0; i < obstacles.length; i++) {
             score = 0;
             spawnTimer = initialSpawnTimer
             gameSpeed = 3;
+            window.localStorage.setItem('highscore', highscore);
         }
 
     ob.update();
