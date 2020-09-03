@@ -17,6 +17,8 @@ let gameSpeed;
 let keys = {};
 let initialSpawnTimer = 200;
 let spawnTimer = initialSpawnTimer
+let scoreText;
+let highScoreText;
 
 
 // Event Listeners
@@ -128,7 +130,26 @@ class Obstacles {
 }
 
 
+// creating a class for on canvas text
+class Text {
+    constructor(t, x, y, a, c, s) {
+        this.text = t;
+        this.x = x;
+        this.y = y;
+        this.align = a;
+        this.color = c;
+        this.size = s;
+    }
 
+    draw () {
+        ctx.beginPath();
+        ctx.fillStyle = this.color;
+        ctx.font = this.size + "px sans-serif";
+        ctx.textAlign = this.align;
+        ctx.fillText(this.text, this.x, this.y);
+        ctx.stroke();
+    }
+}
 
 
 
@@ -166,6 +187,8 @@ const startGame = function () {
     score = 0;
     // create player using above class:
     mahomes = new Player(80, 250, 50, 150, "#ca2430");
+
+    scoreText = new Text("Score: " + score, 25, 25, "left", "#000000");
     
     //use clear function to clear canvas every frame. 
     requestAnimationFrame(clear)
@@ -196,6 +219,12 @@ for (let i = 0; i < obstacles.length; i++) {
 
 mahomes.animation();
 
+// increase score:
+score ++;
+scoreText.text = "Score: " + score;
+scoreText.draw();
+
+// increase gamespeed:
 gameSpeed += 0.003;
 }
 
