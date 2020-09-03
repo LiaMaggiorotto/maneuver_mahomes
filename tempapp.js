@@ -10,6 +10,7 @@ let duckingMahomes = document.getElementById("duckingMahomes");
 let shuttlecock = document.getElementById("shuttleCock");
 let westernAuto = document.getElementById("westernAuto");
 let score;
+let highscore = 0;
 let mahomes;
 let gravity;
 let obstacles = [];
@@ -188,7 +189,8 @@ const startGame = function () {
     // create player using above class:
     mahomes = new Player(80, 250, 50, 150, "#ca2430");
 
-    scoreText = new Text("Score: " + score, 25, 25, "left", "#000000");
+    scoreText = new Text("Score: " + score, 25, 25, "left", "#000000", 17);
+    highScoreText = new Text("Highscore: " + highscore, 25, 50, "left", "#00000", 13)
     
     //use clear function to clear canvas every frame. 
     requestAnimationFrame(clear)
@@ -214,15 +216,43 @@ if(spawnTimer<=0) {
 for (let i = 0; i < obstacles.length; i++) {
     let ob = obstacles[i];
 
+    if(ob.x + ob.width < 0) {
+    obstacles.splice(i, 1); // deleting blocks after they leave the canvas frame
+    }
+
+    if (mahomes.x < ob.x + ob.width &&
+        mahomes.x + mahomes.width > ob.x &&
+        mahomes.y < ob.y + ob.height &&
+        mahomes.y + mahomes.height > ob.y) {
+            obstacles = [];
+            score = 0;
+            spawnTimer = initialSpawnTimer
+            gameSpeed = 3;
+        }
+
     ob.update();
 }
 
 mahomes.animation();
 
-// increase score:
+// increase score and create score text:
 score ++;
 scoreText.text = "Score: " + score;
 scoreText.draw();
+
+if (score > highscore) {
+    highscore = score;
+    highScoreText.text = "Highscore: " + highscore; 
+    highScoreText.color = "#ca2430";
+} else {
+    highScoreText.color = "#000000";
+}
+
+// if (score >= 5000) {
+// insert new html link to indicate MVP with button to play again? 
+// }
+
+highScoreText.draw();
 
 // increase gamespeed:
 gameSpeed += 0.003;
@@ -242,5 +272,5 @@ const $buttonEl = $('#how-to-play');
 
 $buttonEl.click(function () {
     console.log("clickity"); // tests function
-    alert("Press any button to start the game. Use the spacebar to jump and the down arrow to help Mahomes dodge under these KC landmarks. The longer you run, the higher your score!");
+    alert("Use the up arrow and down arrow to help Mahomes dodge these KC landmarks. The longer you run, the higher your score!");
 });
