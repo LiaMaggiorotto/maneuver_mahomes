@@ -34,12 +34,12 @@ document.addEventListener('keyup', function(event) {
 
 
 class Player {
-    constructor(x, y, w, h, c){
+    constructor(img, x, y, w, h){
+        this.image = img;
         this.x = x;
         this.y = y;
         this.width = w;
         this.height = h;
-        this.color = c;
         
         // jump velocity
         this.dy = 0;
@@ -75,7 +75,7 @@ class Player {
             this.y = (canvas.height - this.height);
         }
         
-        this.draw();
+        this.drawImage();
     }
     
     //jump/jump velocity
@@ -90,10 +90,9 @@ class Player {
     }
     
     // create images of mahomes
-    draw () {
+    drawImage () {
         ctx.beginPath();
-        ctx.fillStyle = this.color;
-        ctx.fillRect(this.x, this.y, this.width, this.height);
+        ctx.drawImage(this.image, this.x, this.y, this.width, this.height);
         ctx.stroke();
     }
 
@@ -193,7 +192,7 @@ const startGame = function () {
     }
 
     // create player using above class:
-    mahomes = new Player(80, 250, 50, 150, "#ca2430");
+    mahomes = new Player(runningMahomes, 80, 250, 150, 150);
 
     scoreText = new Text("Score: " + score, 25, 25, "left", "#000000", 17);
     highScoreText = new Text("Highscore: " + highscore, 25, 50, "left", "#00000", 13)
