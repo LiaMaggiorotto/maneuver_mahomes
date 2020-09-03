@@ -20,6 +20,7 @@ let initialSpawnTimer = 200;
 let spawnTimer = initialSpawnTimer
 let scoreText;
 let highScoreText;
+let obImgArray = [shuttlecock, westernAuto];
 
 
 // Event Listeners
@@ -45,6 +46,7 @@ class Player {
         this.dy = 0;
         this.jumpTimer = 0;
         this.originalHeight = h;
+        this.originalWidth = w;
         this.grounded = false;
         this.jumpForce = 10;
     }
@@ -59,9 +61,11 @@ class Player {
         }
         
         if (keys['ArrowDown']) {
-            this.height= this.originalHeight / 2;
+            this.height= this.originalHeight / 1.5;
+            this.width = this.originalWidth / 1.5;
         } else {
-            this.height = this.originalHeight
+            this.height = this.originalHeight;
+            this.width = this.originalWidth;
         }
         
         this.y += this.dy; // HAS TO BE ABOVE THE GRAVITY
@@ -105,12 +109,12 @@ class Player {
 
 // creating a class for obstacles
 class Obstacles {
-    constructor (x, y, w, h, c) {
+    constructor (img, x, y, w, h) {
+        this.image = img;
         this.x = x;
         this.y = y;
         this.width = w;
         this.height = h;
-        this.color = c;
         
         // velocity on the x axis
         this.dx = -gameSpeed;
@@ -118,13 +122,13 @@ class Obstacles {
      
     update () {
         this.x += this.dx
-        this.draw();
+        this.drawImage();
         this.dx = -gameSpeed;
+
     }
-    draw () {
+    drawImage () {
         ctx.beginPath();
-        ctx.fillStyle = this.color;
-        ctx.fillRect(this.x, this.y, this.width, this.height);
+        ctx.drawImage(this.image, this.x, this.y, this.width, this.height);
         ctx.stroke();
     }
 }
@@ -152,10 +156,6 @@ class Text {
 }
 
 
-
-
-
-
 // GAME FUNCTIONS: 
 
 const randomRange = function(min, max) {
@@ -164,15 +164,17 @@ const randomRange = function(min, max) {
 
 
 const createObstacles = function () {
-    let size = randomRange(25, 80);
-    let type = randomRange(0, 1) // 0 is on the ground and 1 is floating 
-    let obstacle = new Obstacles(canvas.width + size, canvas.height - size, size, size, "#FFB612"); // canvas.width + size allows image to be drawn just off side of the canvas prior to entering it. canvas.height - size ensures we are reducing the height of the obstacles so it isn't pushed past the edge (y axis starts at the top of the image)
+    let size = randomRange(50, 100);
+    let type = randomRange(0, 1); // 0 is on the ground and 1 is floating
+    let img =  obImgArray[Math.floor(Math.random() * obImgArray.length)];
+    let obstacle = new Obstacles(img, canvas.width + size, canvas.height - size, size, size); 
+    // canvas.width + size allows image to be drawn just off side of the canvas prior to entering it. canvas.height - size ensures we are reducing the height of the obstacles so it isn't pushed past the edge (y axis starts at the top of the image)
 
     if (type == 1) {
         obstacle.y -= mahomes.originalHeight - 10; // setting the height to be just shorter than mahomes height so that they will collide. 
     }
     obstacles.push(obstacle)
-    }
+}
 
 
 
@@ -187,12 +189,14 @@ const startGame = function () {
     score = 0;
     
     //pulling highscore from previous plays even upon refresh!!!! I'm dead and this is amazing. 
-    if (localStorage.getItem('highscore')) {
-        highscore = localStorage.getItem('highscore');
-    }
+    // if (localStorage.getItem('highscore')) {
+    //     highscore = localStorage.getItem('highscore');
+    // }
 
-    // create player using above class:
-    mahomes = new Player(runningMahomes, 80, 250, 150, 150);
+    // create players using above class:
+    mahomes = new Player(runningMahomes, 80, 250, 225, 225);
+    jumpMahomes = new Player(jumpingMahomes, 80, 250, 225, 225);
+    duckMahomes = new Player(duckingMahomes, 80, 250, 186, 150);
 
     scoreText = new Text("Score: " + score, 25, 25, "left", "#000000", 17);
     highScoreText = new Text("Highscore: " + highscore, 25, 50, "left", "#00000", 13)
@@ -225,15 +229,17 @@ for (let i = 0; i < obstacles.length; i++) {
     obstacles.splice(i, 1); // deleting blocks after they leave the canvas frame
     }
 
+    //collision dection - based on locatedion of x and y axis
     if (mahomes.x < ob.x + ob.width &&
         mahomes.x + mahomes.width > ob.x &&
         mahomes.y < ob.y + ob.height &&
         mahomes.y + mahomes.height > ob.y) {
-            obstacles = [];
-            score = 0;
-            spawnTimer = initialSpawnTimer
-            gameSpeed = 3;
-            window.localStorage.setItem('highscore', highscore);
+            
+                obstacles = [];
+                score = 0;
+                spawnTimer = initialSpawnTimer
+                gameSpeed = 3;
+                window.localStorage.setItem('highscore', highscore);
         }
 
     ob.update();
@@ -250,8 +256,10 @@ if (score > highscore) {
     highscore = score;
     highScoreText.text = "Highscore: " + highscore; 
     highScoreText.color = "#ca2430";
+    highScoreText.size = 17;
 } else {
     highScoreText.color = "#000000";
+    highScoreText.size = 13;
 }
 
 // if (score >= 5000) {
@@ -265,7 +273,6 @@ gameSpeed += 0.003;
 }
 
 startGame();
-
 
 
 
