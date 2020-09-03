@@ -14,7 +14,7 @@ let keys = {};
 
 // Event Listeners
 document.addEventListener('keydown', function(event) {
-        keys[event.code] = true;
+    keys[event.code] = true;
 });
 document.addEventListener('keyup', function(event) {
     keys[event.code] = false;
@@ -35,86 +35,129 @@ class Player {
         this.originalHeight = h;
         this.grounded = false;
         this.jumpForce = 10;
-        }
-
-        // animation methods:
-        animation () {
-        // jump
-            if (keys['ArrowUp']) { 
-                this.jump();
-            } else {
-                this.jumpTimer = 0; 
-            }
-
-            if (keys['ArrowDown']) {
-                this.height= this.originalHeight / 2;
-            } else {
-                this.height = this.originalHeight
-            }
-
-        this.y += this.dy; // HAS TO BE ABOVE THE GRAVITY
-
-        // creating gravity:
-            if(this.y + this.height < canvas.height) {
-                this.dy += gravity;
-            } else {
-                this.dy = 0; // no velocity
-                this.grounded = true;
-                this.y = (canvas.height - this.height);
-            }
-            
-            this.draw();
-        }
-
-        //jump/jump velocity
-        jump () {
-            if (this.grounded && this.jumpTimer == 0) {
-                this.jumpTimer = 1;
-                this.dy = -this.jumpForce;
-            } else if (this.jumpTimer > 0 && this.jumpTimer < 10) {
-                this.jumpTimer++;
-                this.dy = -this.jumpForce - (this.jumpTimer/50);
-            }
-        }
-
-        draw () {
-            ctx.beginPath();
-            ctx.fillStyle = this.color;
-            ctx.fillRect(this.x, this.y, this.width, this.height);
-            ctx.stroke();
-        }
     }
-
     
-    const startGame = function () {
-        ctx.font = "20px  sans-serif";
+    // animation methods:
+    animation () {
+        // jump
+        if (keys['ArrowUp']) { 
+            this.jump();
+        } else {
+            this.jumpTimer = 0; 
+        }
         
-        gameSpeed = 3;
-        gravity = 1;
-        score = 0;
-        // create player using above class:
-        mahomes = new Player(80, 250, 50, 150, "#ca2430");
-        console.log(mahomes);
+        if (keys['ArrowDown']) {
+            this.height= this.originalHeight / 2;
+        } else {
+            this.height = this.originalHeight
+        }
         
-        //use clear function to clear canvas every frame. 
-        requestAnimationFrame(clear)
+        this.y += this.dy; // HAS TO BE ABOVE THE GRAVITY
+        
+        // creating gravity:
+        if(this.y + this.height < canvas.height) {
+            this.dy += gravity;
+        } else {
+            this.dy = 0; // no velocity
+            this.grounded = true;
+            this.y = (canvas.height - this.height);
+        }
+        
+        this.draw();
     }
-
-
-    const clear = function () {
-        requestAnimationFrame(clear);
-            ctx.clearRect(0, 0, canvas.width, canvas.height);
-            
-        mahomes.animation();
+    
+    //jump/jump velocity
+    jump () {
+        if (this.grounded && this.jumpTimer == 0) {
+            this.jumpTimer = 1;
+            this.dy = -this.jumpForce;
+        } else if (this.jumpTimer > 0 && this.jumpTimer < 10) {
+            this.jumpTimer++;
+            this.dy = -this.jumpForce - (this.jumpTimer/50);
+        }
     }
+    
+    // create images of mahomes
+    draw () {
+        ctx.beginPath();
+        ctx.fillStyle = this.color;
+        ctx.fillRect(this.x, this.y, this.width, this.height);
+        ctx.stroke();
+    }
+}
 
-    startGame();
+
+// creating a class for obstacles
+class Obstacles {
+    constructor (x, y, w, h, c) {
+        this.x = x;
+        this.y = y;
+        this.width = w;
+        this.height = h;
+        this.color = c;
+        
+        // velocity on the x axis
+        this.dx = -gameSpeed;
+    }
+    
+    draw () {
+        ctx.beginPath();
+        ctx.fillStyle = this.color;
+        ctx.fillRect(this.x, this.y, this.width, this.height);
+        ctx.stroke();
+    }
+}
 
 
 
 
 
-// event listeners:
+
+
+
+
+// GAME FUNCTIONS: 
+
+const createObstacles = function () {
+    let size = randomRange(20,70);
+    console.log(size);
+    let type = randomeRange
+}
+
+const randomRange = function(min, max) {
+    return Math.floor(Math.random() * (max-min) + min);
+}
+
+
+
+const startGame = function () {
+    ctx.font = "20px  sans-serif";
+    
+    gameSpeed = 3;
+    gravity = 1;
+    score = 0;
+    // create player using above class:
+    mahomes = new Player(80, 250, 50, 150, "#ca2430");
+    
+    //use clear function to clear canvas every frame. 
+    requestAnimationFrame(clear)
+}
+
+
+const clear = function () {
+    requestAnimationFrame(clear);
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    
+    mahomes.animation();
+}
+
+startGame();
+
+
+
+
+
+
 
 //How to Play button
 const $buttonEl = $('#how-to-play');
