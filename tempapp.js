@@ -189,9 +189,9 @@ const startGame = function () {
     score = 0;
     
     //pulling highscore from previous plays even upon refresh!!!! I'm dead and this is amazing. 
-    // if (localStorage.getItem('highscore')) {
-    //     highscore = localStorage.getItem('highscore');
-    // }
+    if (localStorage.getItem('highscore')) {
+        highscore = localStorage.getItem('highscore');
+    }
 
     // create players using above class:
     mahomes = new Player(runningMahomes, 80, 250, 225, 225);
@@ -272,18 +272,26 @@ highScoreText.draw();
 gameSpeed += 0.003;
 }
 
+// const winGame = function () {
+//     location.replace("");
+// }
+
+// const loseGame = function () {
+//     location.replace("");
+// }
+
+
 startGame();
 
 
-
-
-
-//External features
+//External page features
 
 //How to Play button
-const $buttonEl = $('#how-to-play');
+const $buttonEl = $("#howToPlay");
 
 $buttonEl.click(function () {
     console.log("clickity"); // tests function
     alert("Use the up arrow and down arrow to help Mahomes dodge these KC landmarks. The longer you run, the higher your score!");
 });
+
+

@@ -1,7 +1,7 @@
 <link href="https://fonts.googleapis.com/css2?family=Notable&display=swap" rel="stylesheet">
 
 /* colors
-    --off-white: #f9f9f9;
+    --off-white: #f9f9df;
     --black: #000000;
     --red: #ca2430;
     --gold: #FFB612; 
@@ -23,6 +23,7 @@ body {
 }
 
 h1 {
+    margin: 20px;
     border: 5px solid #FFB612;
     padding: 15px;
     font-family: 'Notable', sans-serif;
@@ -61,7 +62,7 @@ canvas {
     display: flex;
 }
 
-#how-to-play {
+#howToPlay {
     color: #FFB612;
     font-family: 'Notable', sans-serif;
     background-color: #ca2430;
@@ -71,7 +72,7 @@ canvas {
     font-size: 15px;
 }
 
-#how-to-play:hover {
+#howToPlay:hover {
     transform: scale(1.1);
     transition: .4s;
     cursor: pointer;
@@ -92,24 +93,28 @@ canvas {
 
 p {
     max-width: 550px;
-    color: #f9f9df;
-    background-color: rgba(0,0,0,0.5);
+    color: #000000;
+    background-color: rgba(249, 249, 223 ,0.5);
     border: 2px solid #000000;
     padding: 12px;
-    font: 12px;
+    font: 11px;
     font-family: 'Notable', sans-serif;
     text-align: center;
 }
 
 a {
-    color: #f9f9df;
+    color: #3f3737;
+    text-decoration: none;
     
 }
 
 a:hover {
-    transform: scale(1.1);
-    transition: .4s;
     cursor: pointer;
+    color: #ca2430;
+}
+
+#gameLink {
+    margin: 20px;
 }
 
 @media (max-width: 500px) {
