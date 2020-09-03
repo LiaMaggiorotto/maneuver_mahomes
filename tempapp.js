@@ -4,12 +4,19 @@ const ctx = canvas.getContext('2d');
 canvas.width = 800;
 canvas.height = 500;
 
+let runningMahomes = document.getElementById("runningMahomes");
+let jumpingMahomes = document.getElementById("jumpingMahomes");
+let duckingMahomes = document.getElementById("duckingMahomes");
+let shuttlecock = document.getElementById("shuttleCock");
+let westernAuto = document.getElementById("westernAuto");
 let score;
 let mahomes;
 let gravity;
-let obstacles;
+let obstacles = [];
 let gameSpeed; 
 let keys = {};
+let initialSpawnTimer = 200;
+let spawnTimer = initialSpawnTimer
 
 
 // Event Listeners
@@ -19,6 +26,8 @@ document.addEventListener('keydown', function(event) {
 document.addEventListener('keyup', function(event) {
     keys[event.code] = false;
 });
+
+
 
 
 class Player {
@@ -84,7 +93,12 @@ class Player {
         ctx.fillRect(this.x, this.y, this.width, this.height);
         ctx.stroke();
     }
+
+
 }
+
+
+
 
 
 // creating a class for obstacles
@@ -99,7 +113,12 @@ class Obstacles {
         // velocity on the x axis
         this.dx = -gameSpeed;
     }
-    
+     
+    update () {
+        this.x += this.dx
+        this.draw();
+        this.dx = -gameSpeed;
+    }
     draw () {
         ctx.beginPath();
         ctx.fillStyle = this.color;
@@ -118,18 +137,27 @@ class Obstacles {
 
 // GAME FUNCTIONS: 
 
-const createObstacles = function () {
-    let size = randomRange(20,70);
-    console.log(size);
-    let type = randomeRange
-}
-
 const randomRange = function(min, max) {
-    return Math.floor(Math.random() * (max-min) + min);
+    return Math.round(Math.random() * (max-min) + min);
 }
 
 
+const createObstacles = function () {
+    let size = randomRange(25, 80);
+    let type = randomRange(0, 1) // 0 is on the ground and 1 is floating 
+    let obstacle = new Obstacles(canvas.width + size, canvas.height - size, size, size, "#FFB612"); // canvas.width + size allows image to be drawn just off side of the canvas prior to entering it. canvas.height - size ensures we are reducing the height of the obstacles so it isn't pushed past the edge (y axis starts at the top of the image)
 
+    if (type == 1) {
+        obstacle.y -= mahomes.originalHeight - 10; // setting the height to be just shorter than mahomes height so that they will collide. 
+    }
+    obstacles.push(obstacle)
+    }
+
+
+
+
+
+//setting variables, creating mahomes image, and calling on the "clear" function to reset canvas between frames.
 const startGame = function () {
     ctx.font = "20px  sans-serif";
     
@@ -147,8 +175,28 @@ const startGame = function () {
 const clear = function () {
     requestAnimationFrame(clear);
     ctx.clearRect(0, 0, canvas.width, canvas.height);
-    
-    mahomes.animation();
+
+    //reduce spawn times for increased speed
+spawnTimer--;
+if(spawnTimer<=0) {
+    createObstacles();
+    spawnTimer = initialSpawnTimer - gameSpeed * 8;
+
+    if (spawnTimer < 60) { // set a base
+    spawnTimer = 60;
+    }
+}
+
+//Spawn
+for (let i = 0; i < obstacles.length; i++) {
+    let ob = obstacles[i];
+
+    ob.update();
+}
+
+mahomes.animation();
+
+gameSpeed += 0.003;
 }
 
 startGame();
@@ -158,6 +206,7 @@ startGame();
 
 
 
+//External features
 
 //How to Play button
 const $buttonEl = $('#how-to-play');

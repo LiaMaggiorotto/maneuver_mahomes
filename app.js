@@ -17,7 +17,7 @@ canvas.height = 500;
 
 
 // setting images as variables so they can be used in my draw methods
-const runningMahomes = document.getElementById("runningMahomes");
+let runningMahomes = document.getElementById("runningMahomes");
 let jumpingMahomes = document.getElementById("jumpingMahomes");
 let duckingMahomes = document.getElementById("duckingMahomes");
 let shuttlecock = document.getElementById("shuttleCock");
