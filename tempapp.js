@@ -14,7 +14,7 @@ let keys = {};
 
 // Event Listeners
 document.addEventListener('keydown', function(event) {
-    keys[event.code] = true;
+        keys[event.code] = true;
 });
 document.addEventListener('keyup', function(event) {
     keys[event.code] = false;
@@ -34,16 +34,25 @@ class Player {
         this.jumpTimer = 0;
         this.originalHeight = h;
         this.grounded = false;
+        this.jumpForce = 10;
         }
 
         // animation methods:
-        Animation () {
-        // test key functions:
-            if (keys['Space']) {
-                console.log("jump");
+        animation () {
+        // jump
+            if (keys['ArrowUp']) { 
+                this.jump();
+            } else {
+                this.jumpTimer = 0; 
             }
 
-        this.y += this.dy;
+            if (keys['ArrowDown']) {
+                this.height= this.originalHeight / 2;
+            } else {
+                this.height = this.originalHeight
+            }
+
+        this.y += this.dy; // HAS TO BE ABOVE THE GRAVITY
 
         // creating gravity:
             if(this.y + this.height < canvas.height) {
@@ -54,11 +63,21 @@ class Player {
                 this.y = (canvas.height - this.height);
             }
             
-            this.Draw();
+            this.draw();
         }
 
+        //jump/jump velocity
+        jump () {
+            if (this.grounded && this.jumpTimer == 0) {
+                this.jumpTimer = 1;
+                this.dy = -this.jumpForce;
+            } else if (this.jumpTimer > 0 && this.jumpTimer < 10) {
+                this.jumpTimer++;
+                this.dy = -this.jumpForce - (this.jumpTimer/50);
+            }
+        }
 
-        Draw () {
+        draw () {
             ctx.beginPath();
             ctx.fillStyle = this.color;
             ctx.fillRect(this.x, this.y, this.width, this.height);
@@ -86,7 +105,7 @@ class Player {
         requestAnimationFrame(clear);
             ctx.clearRect(0, 0, canvas.width, canvas.height);
             
-        mahomes.Animation();
+        mahomes.animation();
     }
 
     startGame();
