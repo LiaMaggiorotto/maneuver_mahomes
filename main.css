@@ -53,6 +53,8 @@ h1 {
 
 canvas {
     border: solid 2px #000000;
+    background-image: url(https://i.imgur.com/RCXp5Gb.png);
+    background-size: cover;
 }
 
 .lower-content {
