@@ -175,6 +175,10 @@ const createObstacles = function () {
 
 
 
+const winGame = function () {
+    location.replace("winGame.html");
+}
+
 
 
 //setting variables, creating mahomes image, and calling on the "clear" function to reset canvas between frames.
@@ -250,6 +254,9 @@ score ++;
 scoreText.text = "Score: " + score;
 scoreText.draw();
 
+if (score >= 2000){
+    winGame();
+}
 
 if (score > highscore) {
     highscore = score;
@@ -266,15 +273,6 @@ highScoreText.draw();
 // increase gamespeed:
 gameSpeed += 0.003;
 }
-
-
-// const winGame = function () {
-//     location.replace("winGame.html");
-// }
-
-// if (score >= 5000){
-//     winGame();
-// }
 
 startGame();
 

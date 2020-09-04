@@ -84,11 +84,14 @@ button:hover {
 
 
 .images {
-    border: 2px solid  #ca2430;
-    border-radius: 25px;
+    border: 2px solid  #000000;
     margin-top: 25px;
-    height: 50vh;
-    width: auto;
+    height: 500px;
+    width: 800px;
+}
+
+h2 {
+    color: #ca2430;
 }
 
 p {
@@ -96,15 +99,24 @@ p {
     color: #000000;
     background-color: rgba(249, 249, 223 ,0.5);
     border: 2px solid #000000;
+    border-radius: 15px;
     padding: 12px;
-    font: 11px;
+    font-size: 15px;
     font-family: 'Notable', sans-serif;
+    text-align: center;
+}
+
+footer {
+    font-size: 12px;
+    max-width: 400px;
+    justify-content: center;
     text-align: center;
 }
 
 #natefarro {
     color: #3f3737;
     text-decoration: none;
+    text-justify: ; 
     
 }
 

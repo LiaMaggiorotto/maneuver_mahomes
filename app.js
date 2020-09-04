@@ -270,9 +270,7 @@ if (score > highscore) {
     highScoreText.size = 13;
 }
 
-// if (score >= 5000) {
-// insert new html link to indicate MVP with button to play again? 
-// }
+
 
 highScoreText.draw();
 
