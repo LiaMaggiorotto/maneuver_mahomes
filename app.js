@@ -34,6 +34,8 @@ document.addEventListener('keyup', function(event) {
 
 
 
+
+// to create different player images
 class Player {
     constructor(img, x, y, w, h){
         this.image = img;
@@ -133,6 +135,8 @@ class Obstacles {
 }
 
 
+
+
 // creating a class for on canvas text
 class Text {
     constructor(t, x, y, a, c, s) {
@@ -153,6 +157,8 @@ class Text {
         ctx.stroke();
     }
 }
+
+
 
 
 // GAME FUNCTIONS: 
@@ -237,9 +243,9 @@ for (let i = 0; i < obstacles.length; i++) {
         }
 
      if (duckMahomes.x < ob.x + ob.width &&
-                    duckMahomes.x + duckMahomes.width > ob.x &&
-                    duckMahomes.y < ob.y + ob.height &&
-                    duckMahomes.y + duckMahomes.height > ob.y) {
+            duckMahomes.x + duckMahomes.width > ob.x &&
+            duckMahomes.y < ob.y + ob.height &&
+            duckMahomes.y + duckMahomes.height > ob.y) {
             resetGame();
         }
 
@@ -247,13 +253,13 @@ for (let i = 0; i < obstacles.length; i++) {
     }
 
 
-if (keys['ArrowDown']) {
-    duckMahomes.animation();
-} else {
-    mahomes.animation();
-}
+// if (keys['ArrowDown']) {
+//     duckMahomes.animation();
+// } else {
+//     mahomes.animation();
+// }
 
-// mahomes.animation();
+mahomes.animation();
 
 // increase score and create score text:
 score ++;
@@ -308,7 +314,7 @@ const $buttonEl = $('#howToPlay');
 
 $buttonEl.click(function () {
     // console.log("clickity"); // tests function
-    alert("Use the up arrow and down arrow to help Mahomes dodge these KC landmarks. The longer you run, the higher your score!");
+    alert("Use the up arrow and down arrow to help Mahomes dodge these KC landmarks. The longer you run, the higher your score! Get to 2000 points and become the next MVP!");
 });
 
 
@@ -335,3 +341,76 @@ $buttonEl.click(function () {
         // ctx.stroke()
         // }
         
+
+
+        // TEST AREA NOTES: Trying to insert images of Mahomes for different key strokes:
+
+        //changed class to not include drawImage
+
+        animation () {
+            // jump
+            if (keys['ArrowUp']) { 
+                this.jump();
+            } else {
+                this.jumpTimer = 0; 
+            }
+            
+            // if (keys['ArrowDown']) {
+            //     this.height= this.originalHeight / 1.5;
+            //     this.width = this.originalWidth / 1.5;
+            // } else {
+            //     this.height = this.originalHeight;
+            //     this.width = this.originalWidth;
+            // }
+            
+            this.y += this.dy; // HAS TO BE ABOVE THE GRAVITY
+            
+            // creating gravity:
+            if(this.y + this.height < canvas.height) {
+                this.dy += gravity;
+            } else {
+                this.dy = 0; // no velocity
+                this.grounded = true;
+                this.y = (canvas.height - this.height);
+            }
+            
+            drawMahomes();
+            // this.drawImage();
+        }
+        
+        //jump/jump velocity
+        jump () {
+            if (this.grounded && this.jumpTimer == 0) {
+                this.jumpTimer = 1;
+                this.dy = -this.jumpForce;
+            } else if (this.jumpTimer > 0 && this.jumpTimer < 10) {
+                this.jumpTimer++;
+                this.dy = -this.jumpForce - (this.jumpTimer/50);
+            }
+        }
+        
+        // create images of mahomes
+        // drawImage () {
+        //     ctx.beginPath();
+        //     ctx.drawImage(this.image, this.x, this.y, this.width, this.height);
+        //     ctx.stroke();
+        // }
+    
+    }
+
+        const drawMahomes = function () {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+        
+            if (keys['ArrowDown']) {
+                duckMahomes = new Player(duckingMahomes, 80, 250, 186, 150);
+            } 
+            if (keys['ArrowUp']) {
+                jumpMahomes = new Player(jumpingMahomes, 80, 250, 225, 225);
+            }
+            else {
+                mahomes = new Player(runningMahomes, 80, 250, 225, 225);
+            }
+            ctx.beginPath();
+            ctx.drawImage(this.image, this.x, this.y, this.width, this.height);
+            ctx.stroke();
+        }

@@ -33,7 +33,6 @@ document.addEventListener('keyup', function(event) {
 
 
 
-
 class Player {
     constructor(img, x, y, w, h){
         this.image = img;
@@ -155,6 +154,7 @@ class Text {
 
 // GAME FUNCTIONS: 
 
+
 const randomRange = function(min, max) {
     return Math.round(Math.random() * (max-min) + min);
 }
@@ -188,11 +188,7 @@ const startGame = function () {
     gameSpeed = 3;
     gravity = 1;
     score = 0;
-    
-    //pulling highscore from previous plays even upon refresh!!!! I'm dead and this is amazing. 
-    // if (localStorage.getItem('highscore')) {
-    //     highscore = localStorage.getItem('highscore');
-    // }
+
 
     // create players using above class:
     mahomes = new Player(runningMahomes, 80, 250, 225, 225);
@@ -235,17 +231,13 @@ for (let i = 0; i < obstacles.length; i++) {
         mahomes.x + mahomes.width > ob.x &&
         mahomes.y < ob.y + ob.height &&
         mahomes.y + mahomes.height > ob.y) {
-            
-                obstacles = [];
-                score = 0;
-                spawnTimer = initialSpawnTimer
-                gameSpeed = 3;
-                window.localStorage.setItem('highscore', highscore);
+            resetGame();
+
+                // window.localStorage.setItem('highscore', highscore);
         }
 
     ob.update();
 }
-
 
 mahomes.animation();
 
@@ -274,9 +266,16 @@ highScoreText.draw();
 gameSpeed += 0.003;
 }
 
+const resetGame = function () {
+    obstacles = [];
+    score = 0;
+    spawnTimer = initialSpawnTimer
+    gameSpeed = 3;
+    window.localStorage.setItem('highscore', highscore);
+}
+
+
 startGame();
-
-
 
 
 //External features
