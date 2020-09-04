@@ -174,11 +174,9 @@ const createObstacles = function () {
 }
 
 
-
 const winGame = function () {
     location.replace("winGame.html");
 }
-
 
 
 //setting variables, creating mahomes image, and calling on the "clear" function to reset canvas between frames.
@@ -273,7 +271,6 @@ const resetGame = function () {
     gameSpeed = 3;
     window.localStorage.setItem('highscore', highscore);
 }
-
 
 startGame();
 
