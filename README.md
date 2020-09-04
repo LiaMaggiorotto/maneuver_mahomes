@@ -17,13 +17,20 @@ First game project for GA
 
 ## User Story
 
-The game starts on loop.
+The game automatically starts without prompt.
+
 User may select "how to play" button upon arrival, which will result in a pop up
+
 Obstacles slide from right to left toward Mahomes and as they approach, the user may use the up arrow key to jump or the down arrow key to duck, avoiding collision with the KC Landmarks. 
+
 Difficulty is increased via the rate in which the items approach increases. 
+
 Score is based on the duration of time in which the player avoids obstacles.
-Game resets when user hits obstacle and holds the previous highscore
-Once the user obtains 2000 points, they will be donned the new MVP and celebrate with Andy Reid. 
+
+Game resets when user hits obstacle and holds the previous highscore.
+
+Once the user obtains 2000 points, they will be donned the new MVP and celebrate with Andy Reid.
+
 User will have the option to return to play Maneuver Mahomes again and Maneuver Mahomes resets.
 
 ## Stretch Goals
