@@ -8,7 +8,7 @@
 */
 
 
-* {
+*, *:before, *:after {
     box-sizing: border-box;
 }
 
@@ -62,7 +62,7 @@ canvas {
     display: flex;
 }
 
-#howToPlay {
+button {
     color: #FFB612;
     font-family: 'Notable', sans-serif;
     background-color: #ca2430;
@@ -72,7 +72,7 @@ canvas {
     font-size: 15px;
 }
 
-#howToPlay:hover {
+button:hover {
     transform: scale(1.1);
     transition: .4s;
     cursor: pointer;
@@ -102,20 +102,26 @@ p {
     text-align: center;
 }
 
-a {
+#natefarro {
     color: #3f3737;
     text-decoration: none;
     
 }
 
-a:hover {
+#natefarror:hover {
     cursor: pointer;
     color: #ca2430;
+}
+
+a{
+    color: #FFB612;
+    text-decoration: none;
 }
 
 #gameLink {
     margin: 20px;
 }
+
 
 @media (max-width: 500px) {
     h1 {

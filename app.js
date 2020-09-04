@@ -1,210 +1,322 @@
-console.log("It's Britney B*tch");
-
-// create const $() variables:
-
-// variable that selects the canvas tag
 const canvas = document.getElementById("play-canvas");
-// console.log(canvas); // checked 
-
-// because the game will be in 2D, this allows us to acces the tools of the 2D tool box (paintbrushes and shapes)
 const ctx = canvas.getContext('2d');
 
-//create let variables :
-
-// formatting canvas within js so I can call it later
 canvas.width = 800;
 canvas.height = 500;
 
-
-// setting images as variables so they can be used in my draw methods
 let runningMahomes = document.getElementById("runningMahomes");
 let jumpingMahomes = document.getElementById("jumpingMahomes");
 let duckingMahomes = document.getElementById("duckingMahomes");
 let shuttlecock = document.getElementById("shuttleCock");
 let westernAuto = document.getElementById("westernAuto");
 let score;
-let player;
+let highscore = 0;
+let mahomes;
 let gravity;
-let obstacles;
-let gameSpeen; 
+let obstacles = [];
+let gameSpeed; 
+let keys = {};
+let initialSpawnTimer = 200;
+let spawnTimer = initialSpawnTimer
+let scoreText;
+let highScoreText;
+let obImgArray = [shuttlecock, westernAuto];
 
 
-//create player class
-// temp: create blocks:
-
-//Player:
-
-// ctx.fillStyle = "#ca2430";
-// ctx.fillRect(80, 250, 50, 150);
-
-//Obstacles:
-
-//shuttlecock
-ctx.fillStyle ="#FFB612";
-ctx.fillRect(400, 350, 50, 50);
-
-//sign
-ctx.fillStyle ="#000000";
-ctx.fillRect(700, 225, 50, 50);
-
-// DONE: How To Play button pop up:
-
-const $buttonEl = $('#how-to-play');
-$buttonEl.click(function () {
-console.log("clickity"); // tests function
-alert("Press any button to start the game. Use the up arrow to jump and the down arrow to help Mahomes dodge under these KC landmarks. The longer you run, the higher your score!");
+// Event Listeners
+document.addEventListener('keydown', function(event) {
+    keys[event.code] = true;
+});
+document.addEventListener('keyup', function(event) {
+    keys[event.code] = false;
 });
 
-// To  make them animated, you have to be able to "draw" repeatedly and clear the canvas within each drawing. Need a class to ensure smooth transitions?
 
-// runImg, duckImg, jumpImg,, width, height, x/y location? jumpTimer? grounded? set direction or velocity?
+
 
 class Player {
-        constructor(x, y, w, h, c){
-            this.x = x;
-            this.y = y;
-            this.width = w;
-            this.height = h;
-            this.color = c;
-            
-            // jump velocity
-            this.dy = 0;
-            this.jumpTimer = 0;
-            this.originalHeight = h;
-            this.grounded = false;
-            }
-            
-           // method to help find the right side - x-axis location of player
-            getRight () {
-                    console.log(this.x + this.width);
-            }
-
-            //create draw method - where squares are populated
-            Draw () {
-                // begin path ensures last drawing ends before new begins.
-                ctx.beginPath();
-                ctx.fillStyle = this.c;
-                ctx.fillRect(this.x, this.y, this.widthe, this.height);
-                ctx.stroke();
-                console.log("drawing")
-            }
-        }
-
+    constructor(img, x, y, w, h){
+        this.image = img;
+        this.x = x;
+        this.y = y;
+        this.width = w;
+        this.height = h;
         
-        
-        
-        
-        
-        
-        // add horizon to canvas id - can do this in CSS by adding background-imge to canvas, setting background repeat to repeat on the x-axis, setting size to cover, and setting animation. Look at keyframes para.
-        
-        // set keys as event listeners : 
-
-        // help:
-        //https://developer.mozilla.org/en-US/docs/Games/Techniques/Control_mechanisms/Desktop_with_mouse_and_keyboard
-
-        // event listeners:
-        document.addEventListener("keydown", keyDownHandler, false);
-        document.addEventListener("keyup", keyUpHandler, false);
-
-        // holding cell for whether the keys are pressed or not
-        let keyUp = false; // case 38
-        let keyDown = false; // case 40 
-        let keys ={up: 38, down: 40};
-
-        // whenever any key is pressed down, we want to execute:
-        const keyDownHandler = function(event) {
-            if(event.keyCode == keys.up) {
-                keyUp = true;
-            }
-            else if (event.keyCode == keys.down) {
-                keyDown = true;
-            }   
+        // jump velocity
+        this.dy = 0;
+        this.jumpTimer = 0;
+        this.originalHeight = h;
+        this.originalWidth = w;
+        this.grounded = false;
+        this.jumpForce = 10;
+    }
+    
+    // animation methods:
+    animation () {
+        // jump
+        if (keys['ArrowUp']) { 
+            this.jump();
+        } else {
+            this.jumpTimer = 0; 
         }
         
-        // whenever any key is released, we want to execute (so we know when it is no longer pressed):
-        const keyUpHandler = function(event) {
-            if(event.keyCode == keys.up) {
-                keyUp = false;
-            }
-            else if (event.keyCode == keys.down) {
-                keyDown = false;
-            }   
+        // if (keys['ArrowDown']) {
+        //     this.height= this.originalHeight / 1.5;
+        //     this.width = this.originalWidth / 1.5;
+        // } else {
+        //     this.height = this.originalHeight;
+        //     this.width = this.originalWidth;
+        // }
+        
+        this.y += this.dy; // HAS TO BE ABOVE THE GRAVITY
+        
+        // creating gravity:
+        if(this.y + this.height < canvas.height) {
+            this.dy += gravity;
+        } else {
+            this.dy = 0; // no velocity
+            this.grounded = true;
+            this.y = (canvas.height - this.height);
         }
         
+        this.drawImage();
+    }
+    
+    //jump/jump velocity
+    jump () {
+        if (this.grounded && this.jumpTimer == 0) {
+            this.jumpTimer = 1;
+            this.dy = -this.jumpForce;
+        } else if (this.jumpTimer > 0 && this.jumpTimer < 10) {
+            this.jumpTimer++;
+            this.dy = -this.jumpForce - (this.jumpTimer/50);
+        }
+    }
+    
+    // create images of mahomes
+    drawImage () {
+        ctx.beginPath();
+        ctx.drawImage(this.image, this.x, this.y, this.width, this.height);
+        ctx.stroke();
+    }
+
+}
+
+
+
+
+
+// creating a class for obstacles
+class Obstacles {
+    constructor (img, x, y, w, h) {
+        this.image = img;
+        this.x = x;
+        this.y = y;
+        this.width = w;
+        this.height = h;
         
-        
-        
-        //.keydown => duckImg / reduced height
-        
-        //.keyup => jumpImg / jumps + use gravity to pull back down
-        
-        
-        // Any key starts the game
-        
-        // Game start function: includes speed, gravity?, score
-        
-        const startGame = function () {
-            ctx.font = "20px  sans-serif";
-            
-            gameSpeed = 3;
-            gravity = 1;
-            score = 0;
-            // create player using above class:
-            const mahomes = new Player(80, 250, 50, 150, "#ca2430");
-            
-            requestAnimationFrame(clear)
+        // velocity on the x axis
+        this.dx = -gameSpeed;
+    }
+     
+    update () {
+        this.x += this.dx
+        this.drawImage();
+        this.dx = -gameSpeed;
+
+    }
+    drawImage () {
+        ctx.beginPath();
+        ctx.drawImage(this.image, this.x, this.y, this.width, this.height);
+        ctx.stroke();
+    }
+}
+
+
+// creating a class for on canvas text
+class Text {
+    constructor(t, x, y, a, c, s) {
+        this.text = t;
+        this.x = x;
+        this.y = y;
+        this.align = a;
+        this.color = c;
+        this.size = s;
+    }
+
+    draw () {
+        ctx.beginPath();
+        ctx.fillStyle = this.color;
+        ctx.font = this.size + "px sans-serif";
+        ctx.textAlign = this.align;
+        ctx.fillText(this.text, this.x, this.y);
+        ctx.stroke();
+    }
+}
+
+
+// GAME FUNCTIONS: 
+
+const randomRange = function(min, max) {
+    return Math.round(Math.random() * (max-min) + min);
+}
+
+
+const createObstacles = function () {
+    let size = randomRange(50, 100);
+    let type = randomRange(0, 1); // 0 is on the ground and 1 is floating
+    let img =  obImgArray[Math.floor(Math.random() * obImgArray.length)];
+    let obstacle = new Obstacles(img, canvas.width + size, canvas.height - size, size, size); 
+    // canvas.width + size allows image to be drawn just off side of the canvas prior to entering it. canvas.height - size ensures we are reducing the height of the obstacles so it isn't pushed past the edge (y axis starts at the top of the image)
+
+    if (type == 1) {
+        obstacle.y -= mahomes.originalHeight - 10; // setting the height to be just shorter than mahomes height so that they will collide. 
+    }
+    obstacles.push(obstacle)
+}
+
+
+
+
+
+//setting variables, creating mahomes image, and calling on the "clear" function to reset canvas between frames.
+const startGame = function () {
+    ctx.font = "20px  sans-serif";
+    
+    gameSpeed = 3;
+    gravity = 1;
+    score = 0;
+    
+    // NOTE pulling highscore from previous plays even upon refresh!!!! I'm dead and this is amazing. Will use if unable to switch to "won" page
+    // if (localStorage.getItem('highscore')) {
+    //     highscore = localStorage.getItem('highscore');
+    // }
+
+    // create players using above class:
+    mahomes = new Player(runningMahomes, 80, 250, 225, 225);
+    jumpMahomes = new Player(jumpingMahomes, 80, 250, 225, 225);
+    duckMahomes = new Player(duckingMahomes, 80, 250, 225, 181);
+
+    scoreText = new Text("Score: " + score, 25, 25, "left", "#000000", 17);
+    highScoreText = new Text("Highscore: " + highscore, 25, 50, "left", "#00000", 13)
+    
+    //use clear function to clear canvas every frame. 
+    requestAnimationFrame(clear)
+}
+
+
+const clear = function () {
+    requestAnimationFrame(clear);
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+    //reduce spawn times for increased speed
+spawnTimer--;
+if(spawnTimer<=0) {
+    createObstacles();
+    spawnTimer = initialSpawnTimer - gameSpeed * 8;
+
+    if (spawnTimer < 60) { // set a base
+    spawnTimer = 60;
+    }
+}
+
+//Spawn
+for (let i = 0; i < obstacles.length; i++) {
+    let ob = obstacles[i];
+
+    if(ob.x + ob.width < 0) {
+    obstacles.splice(i, 1); // deleting blocks after they leave the canvas frame
+    }
+
+    //collision dection - based on location of x and y axis
+    if (mahomes.x < ob.x + ob.width &&
+        mahomes.x + mahomes.width > ob.x &&
+        mahomes.y < ob.y + ob.height &&
+        mahomes.y + mahomes.height > ob.y) {
+            resetGame();
         }
 
-        const clear = function () {
-            requestAnimationFrame(clear);
-            //clear canvas to remove previously drawn Mahomes every frame
-                ctx.clearRect(0, 0, canvas.innerWidth, canvas.innerHeight);
-
-                // mahomes.Draw();
-                // player.x++;
-                
+     if (duckMahomes.x < ob.x + ob.width &&
+                    duckMahomes.x + duckMahomes.width > ob.x &&
+                    duckMahomes.y < ob.y + ob.height &&
+                    duckMahomes.y + duckMahomes.height > ob.y) {
+            resetGame();
         }
 
-        startGame();
-        
-            // const animateMahomes = function () {
-            //     requestAnimationFrame(animateMahomes);
-                
-            //     // clear canvas to remove previously drawn Mahomes
-            //     ctx.clearRect(0, 0, canvas.innerWidth, canvas.innerHeight);
-            //     ctx.beginPath();
-            //     ctx.fillStyle = "#ca2430";
-            //     ctx.fillRect(80, 350, 50, 100);
-                
-            //     dy += 
-        
-        
-        
-        // set timer = to score (but reformat to display 10 sec = 100points?)
-        
-        
-        //create duck function  - .keydown event listener
-        
-        // create obstacles array. 
-        
-        // create a function that causes obstacles to spawn. 
-        // may be able to include math function to increase the rate at which these spawn 
-        // OR game speed increase set to timer intervals
+        ob.update();
+    }
 
-        // detect hitting obstacles
+
+if (keys['ArrowDown']) {
+    duckMahomes.animation();
+} else {
+    mahomes.animation();
+}
+
+// mahomes.animation();
+
+// increase score and create score text:
+score ++;
+scoreText.text = "Score: " + score;
+scoreText.draw();
+
+if (score > highscore) {
+    highscore = score;
+    highScoreText.text = "Highscore: " + highscore; 
+    highScoreText.color = "#ca2430";
+    highScoreText.size = 17;
+} else {
+    highScoreText.color = "#000000";
+    highScoreText.size = 13;
+}
+
+// if (score >= 5000) {
+// insert new html link to indicate MVP with button to play again? 
+// }
+
+highScoreText.draw();
+
+// increase gamespeed:
+gameSpeed += 0.003;
+}
+
+// const winGame = function () {
+//     location.replace("");
+// }
+
+// const loseGame = function () {
+//     location.replace("");
+// }
+
+const resetGame = function () {
+        obstacles = [];
+        score = 0;
+        spawnTimer = initialSpawnTimer
+        gameSpeed = 3;
+        window.localStorage.setItem('highscore', highscore);
+}
+
+
+
+startGame();
+
+
+
+
+//External features
+
+//How to Play button
+const $buttonEl = $('#howToPlay');
+
+$buttonEl.click(function () {
+    // console.log("clickity"); // tests function
+    alert("Use the up arrow and down arrow to help Mahomes dodge these KC landmarks. The longer you run, the higher your score!");
+});
+
+
+
         
         // Game over function: ensure this includes the alert and game is refreshed upon closing the alert
-        
-        
-
-
-
-
-
-
-
-
 
 
 
@@ -225,4 +337,3 @@ class Player {
         // ctx.stroke()
         // }
         
-        // init ()

@@ -100,10 +100,7 @@ class Player {
         ctx.stroke();
     }
 
-
 }
-
-
 
 
 
@@ -189,9 +186,9 @@ const startGame = function () {
     score = 0;
     
     //pulling highscore from previous plays even upon refresh!!!! I'm dead and this is amazing. 
-    if (localStorage.getItem('highscore')) {
-        highscore = localStorage.getItem('highscore');
-    }
+    // if (localStorage.getItem('highscore')) {
+    //     highscore = localStorage.getItem('highscore');
+    // }
 
     // create players using above class:
     mahomes = new Player(runningMahomes, 80, 250, 225, 225);
@@ -245,12 +242,14 @@ for (let i = 0; i < obstacles.length; i++) {
     ob.update();
 }
 
+
 mahomes.animation();
 
 // increase score and create score text:
 score ++;
 scoreText.text = "Score: " + score;
 scoreText.draw();
+
 
 if (score > highscore) {
     highscore = score;
@@ -262,32 +261,30 @@ if (score > highscore) {
     highScoreText.size = 13;
 }
 
-// if (score >= 5000) {
-// insert new html link to indicate MVP with button to play again? 
-// }
-
 highScoreText.draw();
 
 // increase gamespeed:
 gameSpeed += 0.003;
 }
 
+
 // const winGame = function () {
-//     location.replace("");
+//     location.replace("winGame.html");
 // }
 
-// const loseGame = function () {
-//     location.replace("");
+// if (score >= 5000){
+//     winGame();
 // }
-
 
 startGame();
 
 
-//External page features
+
+
+//External features
 
 //How to Play button
-const $buttonEl = $("#howToPlay");
+const $buttonEl = $('#howToPlay');
 
 $buttonEl.click(function () {
     console.log("clickity"); // tests function
