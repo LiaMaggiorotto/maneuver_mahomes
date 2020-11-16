@@ -189,7 +189,7 @@ const startGame = function () {
 
 
     // create players using above class:
-    mahomes = new Player(runningMahomes, 80, 250, 200, 325);
+    mahomes = new Player(runningMahomes, 80, 250, 225, 225);
     jumpMahomes = new Player(jumpingMahomes, 80, 250, 225, 225);
     duckMahomes = new Player(duckingMahomes, 80, 250, 186, 150);
 
