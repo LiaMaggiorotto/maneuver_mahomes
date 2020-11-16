@@ -1,5 +1,5 @@
 # project-zero
-First game project for GA
+First game project for GA - Maneuver Mahomes
 
 ## Wireframe:
 
