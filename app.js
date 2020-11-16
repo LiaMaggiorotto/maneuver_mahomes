@@ -199,12 +199,12 @@ const startGame = function () {
     // }
 
     // create players using above class:
-    mahomes = new Player(runningMahomes, 80, 250, 200, 225);
+    mahomes = new Player(runningMahomes, 80, 250, 180, 225);
     jumpMahomes = new Player(jumpingMahomes, 80, 250, 225, 225);
     duckMahomes = new Player(duckingMahomes, 80, 250, 225, 181);
 
     scoreText = new Text("Score: " + score, 25, 25, "left", "#000000", 17);
-    highScoreText = new Text("Highscore: " + highscore, 25, 50, "left", "#00000", 13)
+    highScoreText = new Text("Highscore: " + highscore, 25, 50, "left", "#000000", 13)
     
     //use clear function to clear canvas every frame. 
     requestAnimationFrame(clear)
