@@ -1,4 +1,4 @@
-<link href="https://fonts.googleapis.com/css2?family=Notable&display=swap" rel="stylesheet">
+
 
 /* colors
     --off-white: #f9f9df;
@@ -13,7 +13,6 @@
 }
 
 body {
-    margin-top: 100px;
     height: 100vh;
     background-color: rgba(255,182,18,0.5);
     display: flex;
@@ -22,11 +21,15 @@ body {
     flex-direction: column;
 }
 
+.mvp-view {
+    margin-top: 100px;
+}
+
 h1 {
     margin: 20px;
     border: 5px solid #FFB612;
     padding: 15px;
-    font-family: 'Notable', sans-serif;
+    font-family: sans-serif;
     font-size: 3em;
     color: #FFB612;
     background-color: #ca2430 ;
@@ -64,7 +67,7 @@ canvas {
 
 button {
     color: #FFB612;
-    font-family: 'Notable', sans-serif;
+    font-family: sans-serif;
     background-color: #ca2430;
     border: 2px solid #FFB612;
     margin: 20px;
@@ -102,7 +105,7 @@ p {
     border-radius: 15px;
     padding: 12px;
     font-size: 15px;
-    font-family: 'Notable', sans-serif;
+    font-family: sans-serif;
     text-align: center;
 }
 

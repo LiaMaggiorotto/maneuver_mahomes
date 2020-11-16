@@ -33,8 +33,6 @@ document.addEventListener('keyup', function(event) {
 
 
 
-
-
 // to create different player images
 class Player {
     constructor(img, x, y, w, h){
@@ -198,8 +196,8 @@ const startGame = function () {
     //     highscore = localStorage.getItem('highscore');
     // }
 
-    // create players using above class:
-    mahomes = new Player(runningMahomes, 80, 250, 180, 225);
+    // create players and score text using above class:
+    mahomes = new Player(runningMahomes, 80, 250, 225, 225);
     jumpMahomes = new Player(jumpingMahomes, 80, 250, 225, 225);
     duckMahomes = new Player(duckingMahomes, 80, 250, 225, 181);
 
@@ -319,30 +317,6 @@ $buttonEl.click(function () {
 
 
 
-        
-        // Game over function: ensure this includes the alert and game is refreshed upon closing the alert
-
-
-
-        
-        // //creating squares in canvas practice:
-        // function init () {
-        // ctx.beginPath()
-        // ctx.strokeRect(50, 35, 50, 50)
-        // ctx.beginPath()
-        // ctx.fillRect(125, 35, 50, 50)
-        
-        // ctx.beginPath()
-        // ctx.strokeStyle = 'red'
-        // ctx.fillStyle = 'blue'
-        // ctx.lineWidth = 5
-        // ctx.rect(200, 35, 50, 50)
-        // ctx.fill()
-        // ctx.stroke()
-        // }
-        
-
-
         // TEST AREA NOTES: Trying to insert images of Mahomes for different key strokes:
 
         //changed class to not include drawImage
@@ -395,14 +369,12 @@ $buttonEl.click(function () {
         //     ctx.drawImage(this.image, this.x, this.y, this.width, this.height);
         //     ctx.stroke();
         // }
-    
-    }
 
         const drawMahomes = function () {
             ctx.clearRect(0, 0, canvas.width, canvas.height);
         
             if (keys['ArrowDown']) {
-                duckMahomes = new Player(duckingMahomes, 80, 250, 186, 150);
+                duckMahomes = new Player(duckingMahomes, 80, 250, 225, 186);
             } 
             if (keys['ArrowUp']) {
                 jumpMahomes = new Player(jumpingMahomes, 80, 250, 225, 225);
