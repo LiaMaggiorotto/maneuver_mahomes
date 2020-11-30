@@ -1,5 +1,6 @@
 # project-zero
 First game project for GA - Maneuver Mahomes
+Endless Runner Game in which Patrick Mahomes jumps over famous KC Landmarks
 
 ## Wireframe:
 
