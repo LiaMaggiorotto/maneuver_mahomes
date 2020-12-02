@@ -98,7 +98,6 @@ class Player {
         ctx.drawImage(this.image, this.x, this.y, this.width, this.height);
         ctx.stroke();
     }
-
 }
 
 
@@ -189,7 +188,7 @@ const startGame = function () {
 
 
     // create players using above class:
-    mahomes = new Player(runningMahomes, 80, 250, 225, 225);
+    mahomes = new Player(runningMahomes, 80, 250, 225, 260);
     jumpMahomes = new Player(jumpingMahomes, 80, 250, 225, 225);
     duckMahomes = new Player(duckingMahomes, 80, 250, 186, 150);
 
