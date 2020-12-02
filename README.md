@@ -3,6 +3,12 @@ First game project for GA - Maneuver Mahomes
 
 Endless Runner Game in which Patrick Mahomes jumps over famous KC Landmarks
 
+<img src = "/images/final.png" alt="Game Screenshot">
+
+Upon reaching the maximum score of 2000 points, the user celebrates with Andy Reid! 
+
+<img src = "/images/MVP/png" alt="Winner Screenshot">
+
 ## Wireframe:
 
 <img src = "/images/wireframe.png" alt="wireframe">
