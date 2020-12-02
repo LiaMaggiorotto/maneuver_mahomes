@@ -98,7 +98,6 @@ class Player {
         ctx.drawImage(this.image, this.x, this.y, this.width, this.height);
         ctx.stroke();
     }
-
 }
 
 
@@ -189,7 +188,7 @@ const startGame = function () {
 
 
     // create players using above class:
-    mahomes = new Player(runningMahomes, 80, 250, 225, 225);
+    mahomes = new Player(runningMahomes, 80, 250, 225, 260);
     jumpMahomes = new Player(jumpingMahomes, 80, 250, 225, 225);
     duckMahomes = new Player(duckingMahomes, 80, 250, 186, 150);
 
@@ -224,14 +223,14 @@ for (let i = 0; i < obstacles.length; i++) {
     obstacles.splice(i, 1); // deleting blocks after they leave the canvas frame
     }
 
-    //collision dection - based on locatedion of x and y axis
+    //collision dection - based on location of x and y axis
     if (mahomes.x < ob.x + ob.width &&
         mahomes.x + mahomes.width > ob.x &&
         mahomes.y < ob.y + ob.height &&
         mahomes.y + mahomes.height > ob.y) {
             resetGame();
 
-                // window.localStorage.setItem('highscore', highscore);
+        // window.localStorage.setItem('highscore', highscore);
         }
 
     ob.update();
@@ -239,7 +238,7 @@ for (let i = 0; i < obstacles.length; i++) {
 
 mahomes.animation();
 
-// increase score and create score text:
+// increase score and draw score text:
 score ++;
 scoreText.text = "Score: " + score;
 scoreText.draw();
@@ -248,6 +247,7 @@ if (score >= 2000){
     winGame();
 }
 
+// update highscore font when new high score is reached in real time:
 if (score > highscore) {
     highscore = score;
     highScoreText.text = "Highscore: " + highscore; 
@@ -277,7 +277,7 @@ startGame();
 
 //External features
 
-//How to Play button
+//How to Play Button
 const $buttonEl = $('#howToPlay');
 
 $buttonEl.click(function () {
