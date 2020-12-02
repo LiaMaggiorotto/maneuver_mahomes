@@ -7,7 +7,7 @@ Endless Runner Game in which Patrick Mahomes jumps over famous KC Landmarks
 
 Upon reaching the maximum score of 2000 points, the user celebrates with Andy Reid! 
 
-<img src = "/images/MVP/png" alt="Winner Screenshot">
+<img src = "/images/MVP.png" alt="Winner Screenshot">
 
 ## Wireframe:
 
